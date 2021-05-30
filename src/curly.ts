@@ -1,40 +1,26 @@
 const TOKENIZER = /({+)([^{}]*)(}+)/gm;
 const TRIMMER = /(^ *'|' *$)|(^ *"|" *$)|(^ *`|` *$)|(^ *| *$)/gm;
 
-const LEFT_BRACE_WILD = /({+)(?:[^{}]+|$)(?![^{]*})/gm;
-const LEFT_BRACE_DOUBLE = /{{/gm;
-const RIGHT_BRACE_WILD = /(?<=(}|^)[^{}]+)}+/gm;
-const RIGHT_BRACE_DOUBLE = /}}/gm;
+const WILD_LEFT_BRACE = /({+)(?:[^{}]+|$)(?![^{]*})/gm;
+const WILD_RIGHT_BRACE = /(?<=(}|^)[^{}]+)}+/gm;
 
 export function format(format: string, source: any, emptyVal: string = ''): string {
     let output = format.
-        replace(LEFT_BRACE_WILD, (match: string, brace: string) =>
+        replace(WILD_LEFT_BRACE, (match: string, brace: string) =>
             match.replace(brace, brace.slice(0, Math.floor(brace.length/2)))).
-        replace(RIGHT_BRACE_WILD, (match: string, brace: string) =>
+        replace(WILD_RIGHT_BRACE, (match: string, brace: string) =>
             match.replace(brace, brace.slice(0, Math.floor(brace.length/2)))).
         replace(TOKENIZER, (_: string, l: string, key: string, r: string) => {
             if(l.length === 2 || r.length === 2) /* not a valid format token */ {
-                if(l.length % 2)
-                    l = l.replace('{', '')
-
-                if(r.length % 2)
-                    r = r.replace('}', '')
-
-                return l.replace(LEFT_BRACE_DOUBLE, '{') + key + r.replace(RIGHT_BRACE_DOUBLE, '}');
+                return l.slice(0, Math.floor(l.length/2)) + key + r.slice(0, Math.floor(r.length/2));
             }
             
             let foundKey = Object.keys(source).find((sourceKey: string) => 
                 sourceKey === key.replace(TRIMMER, ''));
 
-            if(l.length % 2)
-                l = l.replace('{', '')
-
-            if(r.length % 2)
-                r = r.replace('}', '')
-
-            return l.replace(LEFT_BRACE_DOUBLE, '{') + 
+            return l.slice(0, Math.floor(l.length/2)) + 
                 (foundKey? source[<string>foundKey] ?? emptyVal: emptyVal) +
-                r.replace(RIGHT_BRACE_DOUBLE, '}');
+                r.slice(0, Math.floor(r.length/2));
     });
     return output;
 }
