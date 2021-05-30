@@ -1,0 +1,31 @@
+{
+  "name": "curly-placer",
+  "version": "1.0.0",
+  "description": "A simple templating system for replacing {variables} within strings.",
+  "main": "lib/curly.js",
+  "types": "lib/curly.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wendyn-projects/Curly-Placer-JS.git"
+  },
+  "keywords": [
+    "curly",
+    "braces",
+    "template",
+    "templating",
+    "variables"
+  ],
+  "author": "Vaclav [WENDYN] Nemec",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wendyn-projects/Curly-Placer-JS/issues"
+  },
+  "homepage": "https://github.com/wendyn-projects/Curly-Placer-JS#readme",
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  }
+}
