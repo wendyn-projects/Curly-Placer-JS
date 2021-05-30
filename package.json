@@ -1,7 +1,7 @@
 {
   "name": "curly-placer",
   "version": "1.0.0",
-  "description": "A simple templating system for replacing {variables} within strings.",
+  "description": "A simple templating system for replacing {`variables`} within strings.",
   "main": "lib/curly.js",
   "types": "lib/curly.d.ts",
   "scripts": {
